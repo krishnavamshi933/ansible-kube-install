@@ -1,0 +1,25 @@
+---
+- name: Remove Kubernetes packages
+  hosts: all
+  become: true
+  
+  tasks:
+    - name: Remove Kubernetes packages
+      apt:
+        name: "{{ item }}"
+        state: absent
+      with_items:
+        - kubelet
+        - kubeadm
+        - kubectl
+      when: ansible_os_family == "Debian"  # Modify this condition based on your target OS
+      
+    - name: Remove Kubernetes packages
+      yum:
+        name: "{{ item }}"
+        state: absent
+      with_items:
+        - kubelet
+        - kubeadm
+        - kubectl
+      when: ansible_os_family == "RedHat"  # Modify this condition based on your target OS
